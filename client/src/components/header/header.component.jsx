@@ -1,36 +1,37 @@
 import React from "react";
-import './header.styles.scss';
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
+
+import { HeaderContainer, LogoContainer, OptionsContainer, OptionLink } from './header.styles';
 
 import { ReactComponent as Logo } from '../../assets/logo.svg';
 import CartIcon from "../cart-icon/cart-icon.component";
 import CartDropdown from "../cart-dropdown/cart-dropdown.component";
-import {selectCurrentUser} from "../../redux/user/user.selectors";
-import {selectCartHidden} from "../../redux/cart/cart.selectors";
-import {createStructuredSelector} from "reselect";
+import { selectCurrentUser } from "../../redux/user/user.selectors";
+import { selectCartHidden } from "../../redux/cart/cart.selectors";
+import { createStructuredSelector } from "reselect";
 
-import {signOutStart} from "../../redux/user/user.actions";
+import { signOutStart } from "../../redux/user/user.actions";
 
-const Header = ({currentUser, hidden, signOutStart}) => (
-  <div className='header'>
-    <Link className='logo-container' to='/'>
-      <Logo className='logo'/>
-    </Link>
-    <div className='options'>
-      <Link className='option' to='/shop'>SHOP</Link>
-      <Link className='option' to='/shop'>CONTACT</Link>
+const Header = ({ currentUser, hidden, signOutStart }) => (
+  <HeaderContainer>
+    <LogoContainer to='/'>
+      <Logo className='logo' />
+    </LogoContainer>
+    <OptionsContainer>
+      <OptionLink to='/shop'>SHOP</OptionLink>
+      <OptionLink to='/shop'>CONTACT</OptionLink>
       {
         currentUser ?
-          ( <div className='option' onClick={signOutStart}>SIGN OUT</div>)
+          (<div className='option' onClick={signOutStart}>SIGN OUT</div>)
           :
           (<Link className='option' to='/signin'>SIGN IN</Link>)
       }
       <CartIcon />
-    </div>
-    {hidden ? null : <CartDropdown/> }
-  </div>
+    </OptionsContainer>
+    {hidden ? null : <CartDropdown />}
+  </HeaderContainer>
 );
 
 // const mapStateToProps = ({user: {currentUser}, cart: {hidden}}) => ({
